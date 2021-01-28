@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace classes
 {
-    class BankAccount
+    //public 붙여줘야함! : 같은 패키지 내에선 public이지만 C#은 기본으로 private로 자동 지정
+    public class BankAccount
     {
         //private니까 클래스 내의 코드로만 액세스 가능
         //static으로 객체내에서 공유됨
@@ -38,8 +39,10 @@ namespace classes
             MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
         }
 
+    //    public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+
         private List<Transaction> allTransaction = new List<Transaction>(); //거래기록 저장
-        
+
         public void MakeDeposit(decimal amount, DateTime date, string note) //예금
         {
             if (amount <= 0)
@@ -82,5 +85,10 @@ namespace classes
             return report.ToString();
         }
 
+        //virtual : 파생클래스를 구현할 수 있게
+        public virtual void PerformMonthEndTransaction() { }
     }
+
+   
+
 }
