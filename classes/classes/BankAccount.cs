@@ -29,17 +29,22 @@ namespace classes
             }
         }
 
+        private readonly decimal minimumBalance;
+
+        public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+
         //method(2개) : 단일함수를 수행하는 코드블록
-        public BankAccount(string name, decimal initialBalance) //생성자
+        public BankAccount(string name, decimal initialBalance, decimal minimumBalance) //공용 생성자
         {
             this.Number = accountNumberSeed.ToString();
             accountNumberSeed++;
 
             this.Owner = name;
-            MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
+            this.minimumBalance = minimumBalance;
+            if (initialBalance > 0)
+                MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
         }
 
-    //    public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
 
         private List<Transaction> allTransaction = new List<Transaction>(); //거래기록 저장
 
@@ -53,17 +58,16 @@ namespace classes
             allTransaction.Add(deposit);
         }
 
-        public void MakeWithdrawal(decimal amount, DateTime date, string note) //인출
+        public void MakeWithdrawal(decimal amount, DateTime date, string note)
         {
             if (amount <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
             }
-            if (Balance - amount < 0)
+            if (Balance - amount < minimumBalance)
             {
                 throw new InvalidOperationException("Not sufficient funds for this withdrawal");
             }
-
             var withdrawal = new Transaction(-amount, date, note);
             allTransaction.Add(withdrawal);
         }

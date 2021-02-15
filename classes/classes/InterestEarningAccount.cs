@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*--------------------------------------
+ 월말 작업
+ - 월말 잔고의 2%에 해당하는 예금을 얻게 됩니다.
+ --------------------------------------*/
+
 namespace classes
 {
     public class InterestEarningAccount : BankAccount
